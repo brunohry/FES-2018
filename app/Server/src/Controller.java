@@ -22,20 +22,86 @@ public class Controller {
 	
 	public Controller() {
 		loadReservas("reservas.xml");
+
 	}
 	
 	/* função auxiliar que substitui as entradas por interface web, usada no desenvolvimento */
 	void imputByFile() {
 		loadReservas("reservasImput.xml");
-		saveReservas();
+		saveReservas();	
 		
+	}
+	
+	void fazRelatorio(String arquivo) {
+		Path path_exit = Paths.get("", "relatorios.txt");
+		String word = new String();
+		Reserva_DAO filtros = new Reserva_DAO();
+		Path path = Paths.get("", arquivo);
+		boolean flag = false;
+		Charset charset = Charset.forName("UTF-8");
+		Map<String, String> map = new TreeMap<String, String>();;  
+	    try {
+
+		List<String> lines = Files.readAllLines(path, charset);
+			
+	      for (String line : lines) {
+	        if(!line.equals("") && line.substring(line.indexOf("<")+ 1, line.indexOf(">")).equals("relatorio")) {
+	        	map = new TreeMap<String, String>();
+	        	flag = true;
+	        	continue;
+	        }
+	        else if(!line.equals("") && line.substring(line.indexOf("<")+ 1, line.indexOf(">")).equals("/relatorio"))
+				try {
+					{
+						SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
+						filtros.setSala(map.get("sala"));
+						if (map.get("sala") == null) {
+							filtros.setData(null);
+						}
+						else {
+							filtros.setData(sdf1.parse(map.get("data")));
+						}
+							
+						filtros.setAprovação(Boolean.valueOf(map.get("aprovação")));
+						filtros.setSolicitante(map.get("solicitante"));
+						filtros.setAvaliador(map.get("avaliador"));
+
+						
+						flag = false;
+						continue;
+					}
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+	        if ( flag  && !line.equals("") ) {
+	        	String atrb = line.substring(line.indexOf("<")+1, line.indexOf(">"));
+	        	String val = line.substring(line.indexOf(">")+1, line.indexOf("</"));
+	        	map.put(atrb, val);
+	        }
+	      }
+	    } catch (IOException e) {
+	      System.out.println(e);
+	    }
+		List<Reserva_DAO> resultado = reservas.get(filtros);
+		for (Iterator<Reserva_DAO> iterator = resultado.iterator(); iterator.hasNext();) {
+			Reserva_DAO reserva = iterator.next();
+			word += reserva.toString() + "\n";
+		}
+		List<String> lines = Arrays.asList(word);
+		try {
+			Files.write(path_exit, lines, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 		
 	
 	void saveReservas() {
 		try {
-			Path path = Paths.get("", "reservas2.xml");
+			Path path = Paths.get("", "reservas.xml");
 			
 		
 		String word = new String();
@@ -72,13 +138,12 @@ public class Controller {
 		List<String> lines = Files.readAllLines(path, charset);
 			
 	      for (String line : lines) {
-	    	  
-	        if(line.substring(line.indexOf("<")+ 1, line.indexOf(">")).equals("reserva")) {
+	        if(!line.equals("") && line.substring(line.indexOf("<")+ 1, line.indexOf(">")).equals("reserva")) {
 	        	map = new TreeMap<String, String>();
 	        	flag = true;
 	        	continue;
 	        }
-	        else if(line.substring(line.indexOf("<")+ 1, line.indexOf(">")).equals("/reserva"))
+	        else if(!line.equals("") && line.substring(line.indexOf("<")+ 1, line.indexOf(">")).equals("/reserva"))
 				try {
 					{
 						Reserva_DAO reserva = new Reserva_DAO();
@@ -98,7 +163,7 @@ public class Controller {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-	        if ( flag ) {
+	        if ( flag  && !line.equals("") ) {
 	        	String atrb = line.substring(line.indexOf("<")+1, line.indexOf(">"));
 	        	String val = line.substring(line.indexOf(">")+1, line.indexOf("</"));
 	        	map.put(atrb, val);

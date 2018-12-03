@@ -1,5 +1,5 @@
 <Reservas>
-		<reserva>
+	<reserva>
 		<data>21/01/2019</data>
 		<solicitante>Bruno</solicitante>
 		<sala>201</sala>
@@ -27,4 +27,19 @@
 		<aprovação>true</aprovação>
 		<avaliador>Miguel</avaliador>
 	</reserva>
+	<reserva>
+		<data>21/01/2018</data>
+		<solicitante>BrunoHry</solicitante>
+		<sala>501</sala>
+		<aprovação>true</aprovação>
+		<avaliador>Miguel</avaliador>
+	</reserva>
+	<reserva>
+		<data>30/01/2019</data>
+		<solicitante>Pedro</solicitante>
+		<sala>401</sala>
+		<aprovação>false</aprovação>
+		<avaliador>Nickolas</avaliador>
+	</reserva>
 </Reservas>
+
