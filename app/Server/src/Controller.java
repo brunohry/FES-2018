@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -6,6 +8,8 @@ import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -14,17 +18,52 @@ public class Controller {
 	public Reserva reservas = new Reserva();
 	public List<Usuario> usuarios = new ArrayList<Usuario>();
 	public List<Espaço> espaços = new ArrayList<Espaço>();
+	SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
 	
 	public Controller() {
-		loadReservas();
+		loadReservas("reservas.xml");
+	}
+	
+	/* função auxiliar que substitui as entradas por interface web, usada no desenvolvimento */
+	void imputByFile() {
+		loadReservas("reservasImput.xml");
+		saveReservas();
 		
-
+		
 	}
 		
 	
-	void loadReservas() {
-		String teste = new String ();
-		Path path = Paths.get("", "reservas.xml");
+	void saveReservas() {
+		try {
+			Path path = Paths.get("", "reservas2.xml");
+			
+		
+		String word = new String();
+		word = "<Reservas>\r\n";
+		for (Iterator<Reserva_DAO> iterator = reservas.reservas.iterator(); iterator.hasNext();) {
+			Reserva_DAO reserva = iterator.next();
+			word = word +  "	<reserva>\r\n" + 
+					"		<data>" + sdf1.format(reserva.getData()) + "</data>\r\n" + 
+					"		<solicitante>" + reserva.getSolicitante() + "</solicitante>\r\n" + 
+					"		<sala>" + reserva.getSala() + "</sala>\r\n" + 
+					"		<aprovação>" + reserva.getAprovação() +"</aprovação>\r\n" + 
+					"		<avaliador>" + reserva.getAvaliador() + "</avaliador>\r\n" +
+					"	</reserva>\r\n";
+			
+		}
+		word += "</Reservas>\r\n";
+		List<String> lines = Arrays.asList(word);
+		Files.write(path, lines, Charset.forName("UTF-8"));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	void loadReservas(String filename) {
+		Path path = Paths.get("", filename);
 		boolean flag = false;
 		Charset charset = Charset.forName("UTF-8");
 		Map<String, String> map = new TreeMap<String, String>();;  

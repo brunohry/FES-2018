@@ -6,8 +6,7 @@ public class Main {
 
 	public static void main(String[] args) {
 		controller = new Controller();
-	
-		System.out.println(controller.reservas);
+		controller.imputByFile();
 		
 
 	}

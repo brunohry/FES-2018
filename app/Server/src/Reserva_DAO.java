@@ -33,7 +33,7 @@ public class Reserva_DAO {
 		this.sala = string;
 	}
 	
-	public boolean isAprovação() {
+	public boolean getAprovação() {
 		return aprovação;
 	}
 	
