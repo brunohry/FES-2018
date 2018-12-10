@@ -1,0 +1,7 @@
+Sala 201 foi solicitada por Bruno para o dia 21/01/2019 com status de true dado por Miguel
+Sala 301 foi solicitada por Pedro para o dia 02/01/2019 com status de false dado por Nickolas
+Sala 201 foi solicitada por Bruno para o dia 23/01/2019 com status de false dado por Nickolas
+Sala 201 foi solicitada por Pedro para o dia 05/01/2019 com status de true dado por Miguel
+Sala 501 foi solicitada por BrunoHry para o dia 21/01/2018 com status de true dado por Miguel
+Sala 401 foi solicitada por Pedro para o dia 30/01/2019 com status de false dado por Nickolas
+

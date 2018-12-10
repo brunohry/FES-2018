@@ -21,19 +21,18 @@ public class Controller {
 	SimpleDateFormat sdf1= new SimpleDateFormat("dd/MM/yyyy");
 	
 	public Controller() {
-		loadReservas("reservas.xml");
 
 	}
 	
 	/* função auxiliar que substitui as entradas por interface web, usada no desenvolvimento */
 	void imputByFile() {
 		loadReservas("reservasImput.xml");
-		saveReservas();	
+		saveReservas("reservas.xml");	
 		
 	}
 	
-	void fazRelatorio(String arquivo) {
-		Path path_exit = Paths.get("", "relatorios.txt");
+	void fazRelatorio(String arquivo, String arquivo2) {
+		Path path_exit = Paths.get("", arquivo2);
 		String word = new String();
 		Reserva_DAO filtros = new Reserva_DAO();
 		Path path = Paths.get("", arquivo);
@@ -99,9 +98,9 @@ public class Controller {
 	}
 		
 	
-	void saveReservas() {
+	void saveReservas(String fileName) {
 		try {
-			Path path = Paths.get("", "reservas.xml");
+			Path path = Paths.get("", fileName);
 			
 		
 		String word = new String();
